@@ -21,5 +21,14 @@ RSpec.describe Book, type: :model do
         expect(book.errors[:summary]).to include("can't be blank")
       end
     end
+
+    it 'is not valid with a title shorter than 2 characters' do
+      book = described_class.new(title: 'A', summary: 'Book A summary')
+
+      aggregate_failures do
+        expect(book).not_to be_valid
+        expect(book.errors[:title]).to include('is too short (minimum is 2 characters)')
+      end
+    end
   end
 end
