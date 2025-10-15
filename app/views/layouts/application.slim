@@ -1,0 +1,22 @@
+doctype html
+html lang='es'
+  head
+    title
+      - if content_for? :title
+        = content_for :title
+      - else
+        | Librena
+    meta name='title' content='Librena'
+    meta name='robots' content='index, follow'
+    meta http-equiv='Content-Type' content='text/html; charset=utf-8'
+    meta name='language' content='Spanish'
+    meta name='revisit-after' content='15 days'
+    meta name='author' content='Sebastian Reinoso'
+    meta charset='utf-8'
+    meta name='viewport' content='width=device-width, initial-scale=1'
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
+    = javascript_importmap_tags
+    = yield
