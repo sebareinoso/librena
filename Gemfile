@@ -69,6 +69,8 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'rspec', '~> 3.13'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'
