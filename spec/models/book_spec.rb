@@ -24,5 +24,29 @@ RSpec.describe Book, type: :model do
         expect(book).not_to be_valid
       end
     end
+
+    context 'when attached file is not an image (must be PNG, JPG or WEBP)' do
+      it 'is invalid' do
+        book = described_class.new(title: 'Book A', summary: 'Book A summary')
+        book.image.attach(
+          io: File.open(Rails.root.join('spec/fixtures/files/book.txt')),
+          filename: 'book.txt',
+          content_type: 'text/plain'
+        )
+        expect(book).not_to be_valid
+      end
+    end
+
+    context 'when attached file is too large (max is 1 MB)' do
+      it 'is invalid' do
+        book = described_class.new(title: 'Book A', summary: 'Book A summary')
+        book.image.attach(
+          io: StringIO.new('a' * 1025.kilobytes),
+          filename: 'book.jpg',
+          content_type: 'image/jpeg'
+        )
+        expect(book).not_to be_valid
+      end
+    end
   end
 end
