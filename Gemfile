@@ -46,6 +46,7 @@ gem 'thruster', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'sidekiq', '~> 8.0', '>= 8.0.8'
+gem 'slim-rails'
 
 group :development, :test do
   gem 'dotenv-rails'
