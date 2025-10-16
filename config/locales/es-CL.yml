@@ -1,1 +1,37 @@
 es-CL:
+  views:
+    navbar:
+      login: Iniciar sesión
+      logout: Cerrar sesión
+      signup: Registrarse
+    books:
+      author: 'Escrito por: %{author}'
+      index:
+        title: Libros
+        book_button: Poner Nota
+      show:
+        back: Volver a lista de libros
+        user_score: Puntaje de los usuarios
+        score: 
+          zero: Reseñas insuficientes
+          other: '%{count}/5'
+        summary: Resumen
+        review: Puntuar
+  devise:
+    placeholders:
+      username: Ingrese su nombre de usuario
+      email: Ingrese su correo
+      password: Ingrese su contraseña
+      password_confirm: Confirmar contraseña
+    forms:
+      username: Nombre de usuario
+      email: Correo electrónico
+      password: Contraseña
+      remember: Recuérdame
+      login:
+        title: Iniciar sesión
+        submit: Ingresar
+      signup:
+        title: Crear cuenta
+        submit: Registrarse
+        password_length: Mínimo %{count} caracteres

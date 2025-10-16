@@ -11,9 +11,9 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.shadow-sm
           li.nav-item.nav-link = current_user.email
           li.nav-item
             = form_tag destroy_user_session_path, method: :delete do 
-              = submit_tag "Log out", data: { turbo: false }, class: 'nav-link active'
+              = submit_tag t('views.navbar.logout'), data: { turbo: false }, class: 'nav-link active'
         - else
           li.nav-item
-            = link_to "Log in", new_user_session_path, class: "nav-link"
+            = link_to t('views.navbar.login'), new_user_session_path, class: "nav-link"
           li.nav-item
-            = link_to "Sign up", new_user_registration_path, class: "nav-link active"
+            = link_to t('views.navbar.signup'), new_user_registration_path, class: "nav-link active"

@@ -1,5 +1,13 @@
-h1 Books#index
-- @books.each do |book|
-    p = book.id
-    p = book.title
-    p = book.summary
+.container.my-5
+  h1.text-center.mb-5 = t('views.books.index.title')
+
+  .row.justify-content-start
+    - @books.each do |book|
+      .col-3
+        .card[style='margin: 1rem; height: 16rem;']
+          .card-body
+            h5.card-title = book.title
+            p.cart-text.text-secondary = t('views.books.author', author: book.author)
+            p.card-text = book.short_summary
+            = link_to book_path(book), class: 'btn btn-primary' do
+              = t('views.books.index.book_button')

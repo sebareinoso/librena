@@ -3,28 +3,28 @@
     .col-md-6.col-lg-5
       .card.shadow-sm
         .card-body.p-4
-          h2.text-center.mb-4 Sign up
+          h2.text-center.mb-4 = t('devise.forms.signup.title')
           
           = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'needs-validation' }) do |f|
             = render "devise/shared/error_messages", resource: resource
             
             .mb-3
-              = f.label :username, class: 'form-label'
-              = f.text_field :username, autofocus: true, class: 'form-control', placeholder: 'Enter your username'
+              = f.label t('devise.forms.username'), class: 'form-label'
+              = f.text_field :username, autofocus: true, class: 'form-control', placeholder: t('devise.placeholders.username')
             
             .mb-3
-              = f.label :email, class: 'form-label'
-              = f.email_field :email,  autocomplete: 'email', class: 'form-control', placeholder: 'Enter your email'
+              = f.label t('devise.forms.email'), class: 'form-label'
+              = f.email_field :email,  autocomplete: 'email', class: 'form-control', placeholder: t('devise.placeholders.email')
 
             .mb-3
-              = f.label :password, class: 'form-label'
+              = f.label t('devise.forms.password'), class: 'form-label'
               - if @minimum_password_length
-                em.text-muted.small = "#{@minimum_password_length} characters minimum"
-              = f.password_field :password, autocomplete: 'new-password', class: 'form-control', placeholder: 'Create a password'
+                em.text-muted.small = t('devise.forms.signup.password_length', count: @minimum_password_length)
+              = f.password_field :password, autocomplete: 'new-password', class: 'form-control', placeholder: t('devise.placeholders.password')
             
             .mb-3
               = f.label :password_confirmation, class: 'form-label'
-              = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control', placeholder: 'Confirm your password'
+              = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control', placeholder: t('devise.placeholders.password_confirm')
             
             .d-grid
-              = f.submit 'Sign up', class: 'btn btn-success btn-lg'
+              = f.submit t('devise.forms.signup.submit'), class: 'btn btn-success btn-lg'

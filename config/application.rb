@@ -25,7 +25,7 @@ module Librena
     config.beginning_of_week = :monday
 
     I18n.available_locales = %i[en es-CL]
-    I18n.default_locale = :en
+    I18n.default_locale = :'es-CL'
 
     config.generators.system_tests = nil
     config.active_job.queue_adapter = :sidekiq
