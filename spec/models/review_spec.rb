@@ -4,8 +4,19 @@ require 'rails_helper'
 
 RSpec.describe Review, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:user) }
-    it { is_expected.to belong_to(:book) }
+    context 'when it belongs to a user' do
+      it 'is valid' do
+        review = described_class.reflect_on_association(:user)
+        expect(review.macro).to eq(:belongs_to)
+      end
+    end
+
+    context 'when it belongs to a book' do
+      it 'is valid' do
+        review = described_class.reflect_on_association(:book)
+        expect(review.macro).to eq(:belongs_to)
+      end
+    end
   end
 
   describe 'validations' do
@@ -46,7 +57,9 @@ RSpec.describe Review, type: :model do
 
     context 'when rating is correct' do
       it 'is valid' do
-        review = described_class.new rating: 3
+        user = User.create! username: 'Mr rater', email: 'test@test.com', password: '123456'
+        book = Book.create! title: 'Book A', summary: 'A book about books'
+        review = described_class.new user:, book:, rating: 3
         expect(review).to be_valid
       end
     end
@@ -74,6 +87,20 @@ RSpec.describe Review, type: :model do
   end
 
   describe 'database indexes' do
-    it { is_expected.to have_db_index(%i[user_id book_id]).unique(true) }
+    context 'when it has an index on user_id and book_id' do
+      it 'is valid' do
+        indexes = ActiveRecord::Base.connection.indexes(:reviews)
+        composite_index = indexes.find { |i| i.columns == %w[user_id book_id] }
+        expect(composite_index).not_to be_nil
+      end
+    end
+
+    context 'when it as a unique index on %i[user_id book_id]' do
+      it 'is valid' do
+        indexes = ActiveRecord::Base.connection.indexes(:reviews)
+        composite_index = indexes.find { |i| i.columns == %w[user_id book_id] }
+        expect(composite_index.unique).to be true
+      end
+    end
   end
 end
