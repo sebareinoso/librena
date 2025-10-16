@@ -49,6 +49,9 @@ gem 'devise', '~> 4.2'
 gem 'sidekiq', '~> 8.0', '>= 8.0.8'
 gem 'slim-rails'
 
+gem 'cssbundling-rails'
+gem 'jsbundling-rails'
+
 group :development, :test do
   gem 'dotenv-rails'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
