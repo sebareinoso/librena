@@ -1,0 +1,19 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.shadow-sm
+  .container
+    = link_to 'Librena', root_path, class: "navbar-brand fw-bold"
+    
+    button.navbar-toggler type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+      span.navbar-toggler-icon
+    
+    #navbarNav.collapse.navbar-collapse
+      ul.navbar-nav.ms-auto
+        - if user_signed_in?
+          li.nav-item.nav-link = current_user.email
+          li.nav-item
+            = form_tag destroy_user_session_path, method: :delete do 
+              = submit_tag "Log out", data: { turbo: false }, class: 'nav-link active'
+        - else
+          li.nav-item
+            = link_to "Log in", new_user_session_path, class: "nav-link"
+          li.nav-item
+            = link_to "Sign up", new_user_registration_path, class: "nav-link active"
