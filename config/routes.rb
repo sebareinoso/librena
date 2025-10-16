@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   # root "posts#index"
   root 'books#index'
   resources :books, except: :destroy
+  resources :users, only: %i[index show edit update]
 end
