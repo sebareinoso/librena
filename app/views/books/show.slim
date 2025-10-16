@@ -1,0 +1,25 @@
+.container.my-5
+  .row.justify-content-center
+    .col-lg-8
+      = link_to request.referer, class: "btn btn-outline-secondary mb-4" do
+        i.bi.bi-arrow-left
+          = t('views.books.show.back')
+
+      .card.shadow-sm
+        .card-body.p-5
+          h1.display-4.fw-bold.mb-3 = @book.title
+          h2.h4.text-muted.mb-4 = t('views.books.author', author: @book.author)
+
+          .mb-4
+            .d-flex.align-items-center
+              h3.h5.me-3.mb-0 = t('views.books.show.user_score')
+              .rating.me-3
+              span.badge.bg-primary.fs-6 = t('views.books.show.score', count: @book.score)
+
+          hr.my-4
+          .summary
+            h3.h4.mb-3 = t('views.books.show.summary')
+            p.lead.text-muted.lh-lg = @book.summary
+
+          .mt-4.d-flex.gap-2.justify-content-end
+            = link_to t('views.books.show.review'), "#", class: "btn btn-success"
