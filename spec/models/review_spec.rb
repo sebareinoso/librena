@@ -62,6 +62,24 @@ RSpec.describe Review, type: :model do
       end
     end
 
+    context 'when comment is under 1000 characters' do
+      it 'is valid' do
+        user = User.create! username: 'Mr rater', email: 'test@test.com', password: '123456'
+        book = Book.create! title: 'Book A', summary: 'A book about books', author: 'Person'
+        review = described_class.new user:, book:, rating: 3, comment: 'a' * 999
+        expect(review).to be_valid
+      end
+    end
+
+    context 'when comment is 1000 characters' do
+      it 'is valid' do
+        user = User.create! username: 'Mr rater', email: 'test@test.com', password: '123456'
+        book = Book.create! title: 'Book A', summary: 'A book about books', author: 'Person'
+        review = described_class.new user:, book:, rating: 3, comment: 'a' * 1000
+        expect(review).to be_valid
+      end
+    end
+
     context 'when rating is correct' do
       it 'is valid' do
         user = User.create! username: 'Mr rater', email: 'test@test.com', password: '123456'
