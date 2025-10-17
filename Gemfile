@@ -51,6 +51,7 @@ gem 'slim-rails'
 
 gem 'cssbundling-rails'
 gem 'jsbundling-rails'
+gem 'kaminari', '~> 1.2'
 
 group :development, :test do
   gem 'dotenv-rails'

@@ -36,7 +36,7 @@
               button.btn.btn-secondary disabled=true type='button'
                 = t('views.books.show.no_login')
 
-      .card.shadow-sm
+      .card.shadow-sm[style='margin-bottom: 2rem;']
         - @reviews.each do |review|
           .review-item.mb-4.pb-4.border-bottom[id="review-#{review.id}" style='margin: 2.5rem;']
             .d-flex.justify-content-between.align-items-start.mb-2
@@ -53,3 +53,5 @@
                 small.text-muted = l(review.created_at)
             
             p.mb-0.text-muted = review.comment
+
+      = paginate @reviews
