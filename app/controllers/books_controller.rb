@@ -8,7 +8,7 @@ class BooksController < ApplicationController
   end
 
   def show
-    @reviews = @book.reviews.order(created_at: :desc).page(params[:page]).per(3)
+    @reviews = @book.reviews.order(created_at: :desc).page(params[:page]).per(10)
     @current_user_reviewed = @book.reviews.find_by(user: current_user).present?
   end
 
