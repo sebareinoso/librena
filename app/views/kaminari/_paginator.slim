@@ -1,0 +1,22 @@
+== paginator.render do
+  nav
+    ul.pagination.justify-content-center
+      - unless current_page.first?
+        li.page-item
+          .page-link = first_page_tag
+        li.page-item
+          .page-link = prev_page_tag
+
+      - each_page do |page|
+        - if page.display_tag?
+          li.page-item class=(page.current? ? "active" : "")
+            .page-link = page_tag page
+        - elsif !page.was_truncated?
+          li.page-item.disabled
+            .page-link = gap_tag
+
+      - unless current_page.last?
+        li.page-item
+          .page-link = next_page_tag
+        li.page-item
+          .page-link = last_page_tag
