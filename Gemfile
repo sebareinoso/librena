@@ -65,7 +65,7 @@ group :development, :test do
   gem 'rubocop-performance', '~> 1.25'
   gem 'rubocop-rails', '~> 2.31'
   gem 'rubocop-require_tools', '~> 0.1.2'
-  gem 'rubocop-rspec', '~> 3.5'
+  gem 'rubocop-rspec', '~> 3.7'
 
   gem 'awesome_print', '~> 1.9', '>= 1.9.2'
 end
