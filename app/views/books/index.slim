@@ -11,3 +11,4 @@
             p.card-text = book.short_summary
             = link_to book_path(book), class: 'btn btn-primary' do
               = t('views.books.index.book_button')
+  = paginate @books
