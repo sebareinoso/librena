@@ -3,13 +3,39 @@
 require 'rails_helper'
 
 RSpec.describe 'User', type: :request do
+  let(:admin) { User.create! username: 'admin', email: 'admin@test.com', password: '123456', admin: true }
+  let(:regular_user) { User.create! username: 'admin', email: 'admin@test.com', password: '123456' }
+  let(:user) { User.create! username: 'AntonE', email: 'test@test.com', password: '123456' }
+
   describe 'GET /users' do
-    it 'returns a success response' do
-      get users_path
-      expect(response).to be_successful
+    context 'when user is not authenticated' do
+      it 'redirects to sign in page' do
+        get users_path
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'when non-admin user is authenticated' do
+      before { sign_in regular_user }
+
+      it 'redirects to root path' do
+        get users_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when admin user is authenticated' do
+      before { sign_in admin }
+
+      it 'returns a success response' do
+        get users_path
+        expect(response).to be_successful
+      end
     end
 
     context 'when there are users' do
+      before { sign_in admin }
+
       it 'returns a populated @users' do
         user_one = User.create! username: 'AntonE', email: 'test@test.com', password: '123456'
         user_two = User.create! username: 'GordonR', email: 'g@ramsey.com', password: '123456'
@@ -22,29 +48,66 @@ RSpec.describe 'User', type: :request do
   end
 
   describe 'GET /user/:id' do
-    it 'returns a success response' do
-      user = User.create! username: 'AntonE', email: 'test@test.com', password: '123456'
-      get user_path(user)
-      expect(response).to be_successful
+    context 'when user is not authenticated' do
+      it 'redirects to sign in page' do
+        get users_path
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    context 'when non-admin user is authenticated' do
+      before { sign_in regular_user }
+
+      it 'redirects to root path' do
+        get users_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'when admin user is authenticated' do
+      before { sign_in admin }
+
+      it 'returns a success response' do
+        get user_path(user)
+        expect(response).to be_successful
+      end
     end
   end
 
   describe 'PATCH /users/:id' do
-    context 'with invalid email' do
-      it 'does not update the User' do
-        user = User.create! username: 'AntonE', email: 'test@test.com', password: '123456'
-        patch user_path(user), params: { user: { email: nil } }
-        user.reload
-        expect(user.email).to eq('test@test.com')
+    context 'when user is not authenticated' do
+      it 'redirects to sign in page' do
+        get users_path
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
 
-    context 'with valid email' do
-      it 'updates the User' do
-        user = User.create! username: 'AntonE', email: 'test@test.com', password: '123456'
-        patch user_path(user), params: { user: { email: 'test2@test.com' } }
+    context 'when non-admin user is authenticated' do
+      before { sign_in regular_user }
+
+      it 'redirects to root path' do
+        get users_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    context 'with invalid username' do
+      before { sign_in admin }
+
+      it 'does not update the User' do
+        patch user_path(user), params: { user: { username: nil } }
         user.reload
-        expect(user.email).to eq('test2@test.com')
+        expect(user.username).to eq('AntonE')
+      end
+    end
+
+    context 'with valid username' do
+      before { sign_in admin }
+
+      it 'updates the User' do
+        patch user_path(user), params: { user: { username: 'MrKrabs' } }
+        user.reload
+        expect(user.username).to eq('MrKrabs')
       end
     end
   end

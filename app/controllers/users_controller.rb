@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_admin
   before_action :set_user, only: %i[show edit update]
 
   def index
-    @users = User.all
+    @users = User.all.order(created_at: :desc)
   end
 
   def show; end
@@ -26,6 +28,10 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :email)
+    params.require(:user).permit(:username, :active)
+  end
+
+  def check_admin
+    redirect_to root_path unless current_user.admin?
   end
 end

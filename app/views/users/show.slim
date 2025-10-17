@@ -1,2 +1,42 @@
-h1 Users#show
-p Find me in app/views/users/show.html.slim
+.container.my-5
+  .row.justify-content-center
+    .col-lg-8
+      = link_to users_path, class: 'btn btn-outline-secondary mb-4' do
+        i.bi.bi-arrow-left = t('views.users.show.back')
+
+      .card.shadow-sm
+        .card-header.bg-primary.text-white.py-3
+          .d-flex.align-items-center
+            .avatar.bg-white.text-primary.rounded-circle.d-flex.align-items-center.justify-content-center.me-3 style='width: 60px; height: 60px; font-size: 24px;'
+              = @user.initial
+            div
+              h2.h4.mb-0 = @user.username
+        
+        .card-body.p-4
+          = form_with model: @user, url: user_path(@user), method: :patch, local: false do |f|
+            .mb-4
+              = f.label t('views.users.username'), class: 'form-label fw-bold'
+              .input-group
+                span.input-group-text
+                  i.bi.bi-person
+                = f.text_field :username, class: 'form-control', placeholder: t('views.users.show.username')
+
+            .mb-4
+              = f.label t('views.users.email'), class: 'form-label fw-bold'
+              .input-group
+                span.input-group-text
+                  i.bi.bi-envelope
+                = f.email_field :email, class: 'form-control', readonly: true, disabled: true
+              small.text-muted = t('views.users.show.no_email')
+
+            .mb-4
+              = f.label t('views.users.status'), class: 'form-label fw-bold'
+              .form-check.form-switch.form-check-lg
+                = f.check_box :active, class: 'form-check-input'
+                = f.label :active, t('views.users.show.active'), class: 'form-check-label'
+              small.text-muted = t('views.users.show.status')
+            
+            hr.my-4
+
+            .d-flex.gap-2.justify-content-end           
+              = f.submit t('views.users.show.submit'), class: 'btn btn-primary', data: { turbo: false }

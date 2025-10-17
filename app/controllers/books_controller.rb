@@ -7,7 +7,10 @@ class BooksController < ApplicationController
     @books = Book.all
   end
 
-  def show; end
+  def show
+    @reviews = @book.reviews.order(created_at: :desc)
+    @current_user_reviewed = @book.reviews.find_by(user: current_user).present?
+  end
 
   def new
     @book = Book.new

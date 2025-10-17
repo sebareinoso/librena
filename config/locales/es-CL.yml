@@ -4,6 +4,7 @@ es-CL:
       login: Iniciar sesión
       logout: Cerrar sesión
       signup: Registrarse
+      users: Usuarios
     books:
       author: 'Escrito por: %{author}'
       index:
@@ -14,10 +15,13 @@ es-CL:
         user_score: Puntaje de los usuarios
         score: 
           zero: Reseñas insuficientes
-          other: '%{count}/5'
+          other: '%{count}/5.0'
         summary: Resumen
         review: Escribir reseña
         no_login: Inicia sesión para escribir una reseña
+        banned: No puedes agregar una nueva reseña
+        dupe: Ya agregaste una reseña
+        banned_user: (baneado)
     reviews:
       back_to_book: Volver a %{book}
       title: Agrega tu reseña sobre %{book}
@@ -27,6 +31,23 @@ es-CL:
       review_placeholder: ...
       submit: Enviar reseña
       already_exists: ¡Ya existe una reseña para este usuario!
+    users:
+      title: Usuarios
+      username: Nombre de usuario
+      email: Correo electrónico
+      status: Condición
+      actions: Acciones
+      active: Activo
+      banned: Baneado
+      view: Ver
+      empty_users: No hay usuarios
+      show:
+        back: Volver a lista de usuarios
+        no_email: El correo electrónico no se puede cambiar
+        status: Cambiar entre Activo (azul) y Baneado (gris)
+        active: Cambiar
+        username: Ingresa un nombre de usuario
+        submit: Guardar cambios
   devise:
     placeholders:
       username: Ingrese su nombre de usuario
