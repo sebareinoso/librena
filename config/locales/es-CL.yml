@@ -8,7 +8,7 @@ es-CL:
       author: 'Escrito por: %{author}'
       index:
         title: Libros
-        book_button: Poner Nota
+        book_button: Ver comentarios
       show:
         back: Volver a lista de libros
         user_score: Puntaje de los usuarios
@@ -16,7 +16,17 @@ es-CL:
           zero: Reseñas insuficientes
           other: '%{count}/5'
         summary: Resumen
-        review: Puntuar
+        review: Escribir reseña
+        no_login: Inicia sesión para escribir una reseña
+    reviews:
+      back_to_book: Volver a %{book}
+      title: Agrega tu reseña sobre %{book}
+      rating: Puntaje
+      rating_prompt: Seleccione un puntaje
+      review_text: Escribe lo que piensas de este libro
+      review_placeholder: ...
+      submit: Enviar reseña
+      already_exists: ¡Ya existe una reseña para este usuario!
   devise:
     placeholders:
       username: Ingrese su nombre de usuario
@@ -35,3 +45,14 @@ es-CL:
         title: Crear cuenta
         submit: Registrarse
         password_length: Mínimo %{count} caracteres
+  time:
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%A %d de %B de %Y'
+      long_with_time: ! '%A %d de %b de %Y'
+      short: ! '%d de %b'
+      short_with_year: ! '%d de %B, %Y'
+      house: ! '%A %d de %B de %Y'
+      visit: ! '%A %d de %B de %Y, a las %I:%M %p'
+      better: ! '%d-%m-%Y'
+      common: ! "%d"
