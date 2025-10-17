@@ -11,8 +11,8 @@ RSpec.describe 'Books', type: :request do
 
     context 'when there are books' do
       it 'returns a populated @books' do
-        book_one = Book.create! title: 'Book A', summary: 'Book A summary'
-        book_two = Book.create! title: 'Book B', summary: 'Book B is great'
+        book_one = Book.create! title: 'Book A', summary: 'Book A summary', author: 'Person'
+        book_two = Book.create! title: 'Book B', summary: 'Book B is great', author: 'Person'
         get books_path
         expect(response.body).to include book_one.title
         expect(response.body).to include book_two.title
@@ -23,7 +23,7 @@ RSpec.describe 'Books', type: :request do
 
   describe 'GET /book/:id' do
     it 'returns a success response' do
-      book = Book.create! title: 'Book A', summary: 'Book A summary'
+      book = Book.create! title: 'Book A', summary: 'Book A summary', author: 'Person'
       get book_path(book), params: { id: book.id }
       expect(response).to be_successful
     end
@@ -33,7 +33,7 @@ RSpec.describe 'Books', type: :request do
     context 'with empty title' do
       it 'does not create a new Book' do
         expect do
-          post books_path, params: { book: { title: nil } }
+          post books_path, params: { book: { title: nil, author: 'Person' } }
         end.not_to change(Book, :count)
       end
     end
@@ -41,7 +41,7 @@ RSpec.describe 'Books', type: :request do
     context 'with short title' do
       it 'does not create a new Book' do
         expect do
-          post books_path, params: { book: { title: 'A' } }
+          post books_path, params: { book: { title: 'A', author: 'Person' } }
         end.not_to change(Book, :count)
       end
     end
@@ -49,20 +49,28 @@ RSpec.describe 'Books', type: :request do
     context 'with empty summary' do
       it 'does not create a new Book' do
         expect do
-          post books_path, params: { book: { summary: nil } }
+          post books_path, params: { book: { summary: nil, author: 'Person' } }
         end.not_to change(Book, :count)
       end
     end
 
-    context 'with correct title and summary' do
+    context 'with empty author' do
+      it 'does not create a new Book' do
+        expect do
+          post books_path, params: { book: { title: 'Book A', summary: 'Book A summary', author: nil } }
+        end.not_to change(Book, :count)
+      end
+    end
+
+    context 'with correct params' do
       it 'creates a new Book' do
         expect do
-          post books_path, params: { book: { title: 'Book A', summary: 'Book A summary' } }
+          post books_path, params: { book: { title: 'Book A', summary: 'Book A summary', author: 'Person' } }
         end.to change(Book, :count).by(1)
       end
 
       it 'redirects to the created Book' do
-        post books_path, params: { book: { title: 'Book A', summary: 'Book A summary' } }
+        post books_path, params: { book: { title: 'Book A', summary: 'Book A summary', author: 'Person' } }
         expect(response).to redirect_to(Book.last)
       end
     end
@@ -71,7 +79,7 @@ RSpec.describe 'Books', type: :request do
   describe 'PATCH /books/:id' do
     context 'with invalid title' do
       it 'does not update the Book' do
-        book = Book.create! title: 'Book A', summary: 'Book A summary'
+        book = Book.create! title: 'Book A', summary: 'Book A summary', author: 'Person'
         patch book_path(book), params: { book: { title: nil } }
         book.reload
         expect(book.title).to eq('Book A')
@@ -80,8 +88,17 @@ RSpec.describe 'Books', type: :request do
 
     context 'with invalid summary' do
       it 'does not update the Book' do
-        book = Book.create! title: 'Book A', summary: 'Book A summary'
+        book = Book.create! title: 'Book A', summary: 'Book A summary', author: 'Person'
         patch book_path(book), params: { book: { summary: nil } }
+        book.reload
+        expect(book.summary).to eq('Book A summary')
+      end
+    end
+
+    context 'with invalid author' do
+      it 'does not update the Book' do
+        book = Book.create! title: 'Book A', summary: 'Book A summary', author: 'Person'
+        patch book_path(book), params: { book: { author: nil } }
         book.reload
         expect(book.summary).to eq('Book A summary')
       end
@@ -89,7 +106,7 @@ RSpec.describe 'Books', type: :request do
 
     context 'with valid title' do
       it 'updates the Book' do
-        book = Book.create! title: 'Book A', summary: 'Book A summary'
+        book = Book.create! title: 'Book A', summary: 'Book A summary', author: 'Person'
         patch book_path(book), params: { book: { title: 'Book A (revisit)' } }
         book.reload
         expect(book.title).to eq('Book A (revisit)')
@@ -98,7 +115,7 @@ RSpec.describe 'Books', type: :request do
 
     context 'with valid summary' do
       it 'updates the Book' do
-        book = Book.create! title: 'Book A', summary: 'Book A summary'
+        book = Book.create! title: 'Book A', summary: 'Book A summary', author: 'Person'
         patch book_path(book), params: { book: { summary: 'Longer summary' } }
         book.reload
         expect(book.summary).to eq('Longer summary')
