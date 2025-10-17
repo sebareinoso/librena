@@ -15,8 +15,9 @@ class Book < ApplicationRecord
   end
 
   def score
-    return 0 if reviews.count < 3
+    book_reviews = reviews.joins(:user).where(users: { deleted_at: nil })
+    return 0 if book_reviews.count < 3
 
-    reviews.average(:rating).round(1)
+    book_reviews.average(:rating).round(1)
   end
 end
