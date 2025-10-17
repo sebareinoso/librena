@@ -1,24 +1,40 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Requirements
+- Ruby 3.4.2
+- Rails 8.0.2
 
-Things you may want to cover:
+The ruby version can be installed using rbenv (recommended) or rvm.
 
-* Ruby version
+## Dev steps
+- Install the correct ruby version.
+- Once that is done, run the following commands:
+  - `bundle`
+  - `yarn`
+- Run the `rails db:create` and `rails db:migrate` commands. If `rails db:create` fails, manually create
+the `librena_development` database using `PSQL` or similar database method and after run again `rails db:migrate`
+- If the steps above were successful, run `bin/dev` to start developing.
+- There are no background jobs.
 
-* System dependencies
+## Structure
+This is an app as a exercise for an interview. As such, the minimal code was written to ensure functionality.
+There are 3 key models:
 
-* Configuration
+- User
+- Book
+- Review
 
-* Database creation
+Each user can leave one review per book in the system. A book can have multiple reviews.
+A review consists of a score (1 through 5 stars) and an optional comment, with a max of 1000 characters.
+If a user is banned, their review does not count towards the book rating global average.
 
-* Database initialization
+## Tests
+All the tests are found inside the `spec/` folder. There are two kinds of tests:
 
-* How to run the test suite
+- Model tests: run by typing the command `bundle exec rspec spec/models/{MODEL_NAME}`
+- Request tests: run by typing the command `bundle exec rspec spec/requests/{REQUEST_NAME}`
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Data
+The database can be populated using the Faker gem included in the `gemfile`.
+Simply enter in a terminal and type `rails c` to get into the rails console and use the
+Faker documentation to create Books and Users.
