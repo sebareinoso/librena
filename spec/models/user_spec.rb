@@ -36,7 +36,8 @@ RSpec.describe User, type: :model do
 
     context 'when password is missing' do
       it 'is not invalid' do
-        user = described_class.new username: 'Mr rater', email: 'test@test.com', password_confirmation: '123456'
+        user = described_class.new username: 'Mr rater', email: 'test@test.com', password_confirmation: '123456',
+                                   admin: false
         expect(user).not_to be_valid
       end
     end
@@ -45,6 +46,20 @@ RSpec.describe User, type: :model do
       it 'is not invalid' do
         user = described_class.new username: 'Mr rater', email: 'test@test.com', password: '12345'
         expect(user).not_to be_valid
+      end
+    end
+
+    context 'when params are corrent and admin is false' do
+      it 'is valid' do
+        user = described_class.new username: 'Mr rater', email: 'test@test.com', password: '123456', admin: false
+        expect(user).to be_valid
+      end
+    end
+
+    context 'when params are corrent and admin is true' do
+      it 'is valid' do
+        user = described_class.new username: 'Mr rater', email: 'test@test.com', password: '123456', admin: true
+        expect(user).to be_valid
       end
     end
   end
