@@ -1,11 +1,11 @@
 .container.my-5
   .row.justify-content-center
     .col-lg-8
-      = link_to request.referer, class: "btn btn-outline-secondary mb-4" do
+      = link_to books_path, class: 'btn btn-outline-secondary mb-4' do
         i.bi.bi-arrow-left
           = t('views.books.show.back')
 
-      .card.shadow-sm
+      .card.shadow-sm[style='margin-bottom: 2rem;']
         .card-body.p-5
           h1.display-4.fw-bold.mb-3 = @book.title
           h2.h4.text-muted.mb-4 = t('views.books.author', author: @book.author)
@@ -22,4 +22,25 @@
             p.lead.text-muted.lh-lg = @book.summary
 
           .mt-4.d-flex.gap-2.justify-content-end
-            = link_to t('views.books.show.review'), "#", class: "btn btn-success"
+            - if user_signed_in?
+              button.btn.btn-success type='button'
+                = link_to t('views.books.show.review'), new_book_review_path(@book)
+            - else 
+              button.btn.btn-secondary disabled=true type='button'
+                = t('views.books.show.no_login')
+
+      .card.shadow-sm
+        - @book.reviews.each do |review|
+          .review-item.mb-4.pb-4.border-bottom[id="review-#{review.id}" style='margin: 2.5rem;']
+            .d-flex.justify-content-between.align-items-start.mb-2
+              .user-review
+                strong.text-dark = review.user.username
+                .rating.ms-2.d-inline
+                  - review.rating.times do
+                    i.bi.bi-star-fill.text-warning
+                  - (5 - review.rating).times do
+                    i.bi.bi-star.text-muted
+              .review-date
+                small.text-muted = l(review.created_at)
+            
+            p.mb-0.text-muted = review.comment
