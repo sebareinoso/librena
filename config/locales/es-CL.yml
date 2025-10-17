@@ -22,6 +22,7 @@ es-CL:
         banned: No puedes agregar una nueva reseña
         dupe: Ya agregaste una reseña
         banned_user: (baneado)
+        reviews_title: Reseñas
     reviews:
       back_to_book: Volver a %{book}
       title: Agrega tu reseña sobre %{book}

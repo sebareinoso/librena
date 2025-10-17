@@ -36,6 +36,7 @@
               button.btn.btn-secondary disabled=true type='button'
                 = t('views.books.show.no_login')
 
+      h2 = t('views.books.show.reviews_title')
       .card.shadow-sm[style='margin-bottom: 2rem;']
         - @reviews.each do |review|
           .review-item.mb-4.pb-4.border-bottom[id="review-#{review.id}" style='margin: 2.5rem;']
