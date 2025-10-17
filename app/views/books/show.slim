@@ -23,14 +23,21 @@
 
           .mt-4.d-flex.gap-2.justify-content-end
             - if user_signed_in?
-              button.btn.btn-success type='button'
-                = link_to t('views.books.show.review'), new_book_review_path(@book)
+              - if current_user.banned?
+                button.btn.btn-secondary disabled=true type='button'
+                  = t('views.books.show.banned')
+              - elsif @current_user_reviewed
+                button.btn.btn-secondary disabled=true type='button'
+                  = t('views.books.show.dupe')
+              - else
+                button.btn.btn-success type='button'
+                  = link_to t('views.books.show.review'), new_book_review_path(@book)
             - else 
               button.btn.btn-secondary disabled=true type='button'
                 = t('views.books.show.no_login')
 
       .card.shadow-sm
-        - @book.reviews.each do |review|
+        - @reviews.each do |review|
           .review-item.mb-4.pb-4.border-bottom[id="review-#{review.id}" style='margin: 2.5rem;']
             .d-flex.justify-content-between.align-items-start.mb-2
               .user-review
@@ -40,6 +47,8 @@
                     i.bi.bi-star-fill.text-warning
                   - (5 - review.rating).times do
                     i.bi.bi-star.text-muted
+                - if review.user.banned?
+                  strong.text-secondary = t('views.books.show.banned_user')
               .review-date
                 small.text-muted = l(review.created_at)
             
