@@ -1,0 +1,28 @@
+.container.my-5
+  .row.justify-content-center
+    .col-lg-8
+      = link_to request.referer, class: 'btn btn-outline-secondary mb-4' do
+        i.bi.bi-arrow-left
+          = t('views.reviews.back_to_book', book: @book.title)
+
+      .card.shadow-sm[style='margin-bottom: 2rem;']
+        .card-body.p-5
+          = form_with model: [@book, Review.new], id: 'review-form', data: { turbo_frame: 'reviews' } do |f|
+            .modal-header
+              h5.modal-title = t('views.reviews.title', book: @book.title)
+            
+            .modal-body
+              .mb-3
+                = f.label :rating, t('views.reviews.rating'), class: 'form-label'
+                .rating-input
+                  = f.select :rating, 
+                      options_for_select((1..5).map { |n| [ '⭐' * n, n ] }),
+                      { prompt: t('views.reviews.rating_prompt') },
+                      class: 'form-select'
+              
+              .mb-3
+                = f.label :comment, t('views.reviews.review_text'), class: 'form-label'
+                = f.text_area :comment, class: 'form-control', rows: 4, placeholder: t('views.reviews.review_placeholder'), required: true
+            
+            .modal-footer
+              = f.submit t('views.reviews.submit'), class: 'btn btn-primary'
