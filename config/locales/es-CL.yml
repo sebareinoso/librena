@@ -48,6 +48,12 @@ es-CL:
         active: Cambiar
         username: Ingresa un nombre de usuario
         submit: Guardar cambios
+    pagination:
+      first: "&laquo; Primera"
+      last: "Última &raquo;"
+      previous: "&lsaquo; Anterior"
+      next: "Siguiente &rsaquo;"
+      truncate: "&hellip;"
   devise:
     placeholders:
       username: Ingrese su nombre de usuario
