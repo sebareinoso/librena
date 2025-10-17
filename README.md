@@ -37,5 +37,6 @@ All the tests are found inside the `spec/` folder. There are two kinds of tests:
 
 ## Data
 The database can be populated using the Faker gem included in the `gemfile`.
-Simply enter in a terminal and type `rails c` to get into the rails console and use the
+Simply run `bundle exec rake fake:seed`.
+Or enter in a terminal and type `rails c` to get into the rails console and use the
 Faker documentation to create Books and Users.
