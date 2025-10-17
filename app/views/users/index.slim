@@ -4,7 +4,7 @@
       .d-flex.justify-content-between.align-items-center.mb-4
         h1.display-5.fw-bold = t('views.users.title')
 
-      .card.shadow-sm
+      .card.shadow-sm[style='margin-bottom: 2rem;']
         .card-body.p-0
           .table-responsive
             table.table.table-striped.table-hover.mb-0
@@ -37,3 +37,5 @@
                     td.text-center.py-5.text-muted colspan='4'
                       i.bi.bi-people.fs-1.mb-3.d-block
                       p = t('views.users.empty_users')
+
+      = paginate @users
