@@ -13,6 +13,7 @@ The ruby version can be installed using rbenv (recommended) or rvm.
   - `yarn`
 - Run the `rails db:create` and `rails db:migrate` commands. If `rails db:create` fails, manually create
 the `librena_development` database using `PSQL` or similar database method and after run again `rails db:migrate`
+- Using the `rails c` command launch the rails console. Create a user with the `admin: true` field.
 - If the steps above were successful, run `bin/dev` to start developing.
 - There are no background jobs.
 
