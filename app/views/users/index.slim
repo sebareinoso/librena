@@ -1,5 +1,39 @@
-h1 Users#index
-- @users.each do |user|
-    p = user.id
-    p = user.email
-    p = user.username
+.container.my-5
+  .row.justify-content-center
+    .col-lg-10
+      .d-flex.justify-content-between.align-items-center.mb-4
+        h1.display-5.fw-bold = t('views.users.title')
+
+      .card.shadow-sm
+        .card-body.p-0
+          .table-responsive
+            table.table.table-striped.table-hover.mb-0
+              thead.table-light
+                tr
+                  th.ps-4 = t('views.users.username')
+                  th = t('views.users.email')
+                  th.text-center = t('views.users.status')
+                  th.text-end.pe-4 = t('views.users.actions')
+              tbody
+                - @users.each do |user|
+                  tr
+                    td.ps-4
+                      .d-flex.align-items-center
+                        .avatar.bg-primary.text-white.rounded-circle.d-flex.align-items-center.justify-content-center.me-2 style='width: 40px; height: 40px;'
+                          = user.initial
+                        strong = user.username
+                    td
+                      = user.email
+                    td.text-center
+                      - unless user.banned?
+                        span.badge.bg-success = t('views.users.active')
+                      - else
+                        span.badge.bg-secondary = t('views.users.banned')
+                    td.text-end.pe-4
+                      = link_to t('views.users.view'), user_path(user), class: 'btn btn-sm btn-outline-primary'
+                
+                - if @users.empty?
+                  tr
+                    td.text-center.py-5.text-muted colspan='4'
+                      i.bi.bi-people.fs-1.mb-3.d-block
+                      p = t('views.users.empty_users')
