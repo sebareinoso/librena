@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # root "posts#index"
   root 'books#index'
   resources :books, except: :destroy do
-    resources :reviews, only: %i[index create]
+    resources :reviews, only: %i[index new create]
   end
   devise_for :users, path: ''
   resources :users, only: %i[index show edit update]

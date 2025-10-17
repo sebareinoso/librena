@@ -55,10 +55,17 @@ RSpec.describe Review, type: :model do
       end
     end
 
+    context 'when comment is too long (max 1000 characters)' do
+      it 'is invalid' do
+        review = described_class.new rating: 3, comment: 'a' * 1001
+        expect(review).not_to be_valid
+      end
+    end
+
     context 'when rating is correct' do
       it 'is valid' do
         user = User.create! username: 'Mr rater', email: 'test@test.com', password: '123456'
-        book = Book.create! title: 'Book A', summary: 'A book about books'
+        book = Book.create! title: 'Book A', summary: 'A book about books', author: 'Person'
         review = described_class.new user:, book:, rating: 3
         expect(review).to be_valid
       end
@@ -67,7 +74,7 @@ RSpec.describe Review, type: :model do
     context 'when user reviews a book twice' do
       it 'is invalid' do
         user = User.create! username: 'Mr rater', email: 'test@test.com', password: '123456'
-        book = Book.create! title: 'Book A', summary: 'A book about books'
+        book = Book.create! title: 'Book A', summary: 'A book about books', author: 'Person'
         described_class.create! user:, book:, rating: 4, comment: ''
         dupe_review = described_class.new user:, book:, rating: 3, comment: 'Average'
         expect(dupe_review).not_to be_valid
@@ -77,8 +84,8 @@ RSpec.describe Review, type: :model do
     context 'when user reviews another book' do
       it 'is valid' do
         user = User.create! username: 'Mr rater', email: 'test@test.com', password: '123456'
-        book_one = Book.create! title: 'Book A', summary: 'A book about books'
-        book_two = Book.create! title: 'Necronomicon', summary: 'Find out yourself'
+        book_one = Book.create! title: 'Book A', summary: 'A book about books', author: 'Person'
+        book_two = Book.create! title: 'Necronomicon', summary: 'Find out yourself', author: 'Person'
         described_class.create! user:, book: book_one, rating: 4, comment: ''
         second_review = described_class.new user:, book: book_two, rating: 5, comment: '5/5'
         expect(second_review).to be_valid

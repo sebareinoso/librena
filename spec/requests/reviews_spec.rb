@@ -4,12 +4,16 @@ require 'rails_helper'
 
 RSpec.describe 'Reviews', type: :request do
   let(:user) { User.create! username: 'AntonE', email: 'test@test.com', password: '123456' }
-  let(:book) { Book.create! title: 'Book A', summary: 'Book A summary' }
+  let(:book) { Book.create! title: 'Book A', summary: 'Book A summary', author: 'Person' }
+
+  before do
+    sign_in user, scope: :user
+  end
 
   describe 'POST /books/:book_id/reviews' do
     context 'when params are valid' do
       let(:valid_params) do
-        { review: { user_id: user.id, rating: 5 } }
+        { review: { rating: 5 } }
       end
 
       it 'creates a review' do
@@ -29,7 +33,7 @@ RSpec.describe 'Reviews', type: :request do
 
       it 'does not create a new review' do
         expect do
-          post book_reviews_path(book), params: { review: { user_id: user.id, rating: 4, comment: 'Second time' } }
+          post book_reviews_path(book), params: { review: { rating: 4, comment: 'Second time' } }
         end.not_to change(Review, :count)
       end
     end
